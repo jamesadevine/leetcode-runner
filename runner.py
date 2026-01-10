@@ -25,7 +25,7 @@ def format_value(value: Any, max_length: int = 50) -> str:
     """Format a value for display, truncating if necessary."""
     s = repr(value)
     if len(s) > max_length:
-        return s[:max_length - 3] + "..."
+        return s[: max_length - 3] + "..."
     return s
 
 
@@ -143,6 +143,6 @@ def run_tests(solution_file: str = "solution.py"):
 
 
 if __name__ == "__main__":
-    solution_file = sys.argv[1] if len(sys.argv) > 1 else "solution.py"
+    solution_file = sys.argv[1] if len(sys.argv) > 1 else "two_sum.py"
     success = run_tests(solution_file)
     sys.exit(0 if success else 1)
