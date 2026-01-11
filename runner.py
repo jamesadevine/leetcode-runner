@@ -121,6 +121,8 @@ def run_tests(solution_file: str = "solution.py"):
             print(f"  Actual:   {format_value(actual)}")
 
         except Exception as e:
+            import traceback
+
             failed += 1
             elapsed = (time.perf_counter() - start_time) * 1000
             total_time += elapsed
@@ -128,6 +130,11 @@ def run_tests(solution_file: str = "solution.py"):
             print(f"  Input:    {format_value(args)}")
             print(f"  Expected: {format_value(expected)}")
             print(f"  Error:    {type(e).__name__}: {e}")
+            print(f"  Traceback:")
+            # Print the full traceback, indented for readability
+            for line in traceback.format_exception(type(e), e, e.__traceback__):
+                for subline in line.rstrip().split("\n"):
+                    print(f"    {subline}")
 
     # Summary
     print("\n" + "=" * 60)
