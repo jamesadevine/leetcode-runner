@@ -60,13 +60,15 @@ class Solution:
 
         result = []
 
-        def depthFirstSearch(node: Optional[TreeNode]):
-            if node:
-                depthFirstSearch(node.left)
-                result.append(node.val)
-                depthFirstSearch(node.right)
+        def depthFirstSearch(node):
+            if node is None:
+                return
+            depthFirstSearch(node.left)
+            result.append(node.val)
+            depthFirstSearch(node.right)
 
         depthFirstSearch(root)
+
         return result
 
 
