@@ -24,13 +24,6 @@ Input: grid = [
   ["0","0","0","1","1"]
 ]
 Output: 3
-
-Approach: DFS/BFS
-- Iterate through grid, when you find a '1', increment count and "sink" the entire island
-- Use DFS or BFS to mark all connected land as visited (change to '0' or use visited set)
-
-Time: O(m * n)
-Space: O(m * n) worst case for DFS stack / BFS queue
 """
 
 from typing import List
@@ -38,9 +31,33 @@ from typing import List
 
 class Solution:
     def numIslands(self, grid: List[List[str]]) -> int:
-        # TODO: Implement your solution
-        # Hint: For each unvisited '1', do DFS/BFS to mark entire island
-        pass
+        count = 0
+        x_len = len(grid[0])
+        y_len = len(grid)
+
+        # find a one, recursively sink 1 -> 0
+        def sink(x: int, y: int):
+            if x < 0 or x >= x_len:
+                return
+            if y < 0 or y >= y_len:
+                return
+            if grid[y][x] == "0":
+                return
+
+            grid[y][x] = "0"
+
+            sink(x + 1, y)
+            sink(x - 1, y)
+            sink(x, y + 1)
+            sink(x, y - 1)
+
+        for y in range(y_len):
+            for x in range(x_len):
+                if grid[y][x] == "1":
+                    count += 1
+                    sink(x, y)
+
+        return count
 
 
 # Test cases: list of (args_tuple, expected_output)
