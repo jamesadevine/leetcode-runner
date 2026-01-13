@@ -15,27 +15,7 @@ class Solution:
 
         Example: LeetCode #704 - Binary Search
         """
-        if nums == []:
-            return -1
-
-        left = 0
-        right = len(nums) - 1
-        found = -1
-
-        while left <= right:
-            midpoint = left + ((right - left) // 2)
-            located = nums[midpoint]
-
-            if located == target:
-                found = midpoint
-                break
-
-            if target > located:
-                left = midpoint + 1
-            elif target < located:
-                right = midpoint - 1
-
-        return found
+        pass
 
 
 # Test cases: list of (args_tuple, expected_output)

@@ -25,54 +25,11 @@ class ListNode:
 
 
 class Solution:
-    def printList(self, head: ListNode):
-        while head:
-            print(head.val, end=", ")
-            head = head.next
-        print()
-
     def reorderList(self, head: Optional[ListNode]) -> None:
         """
         Do not return anything, modify head in-place instead.
         """
-        # common pattern to reach the end of the list and get the middle in O(n) time.
-        slow, fast = head, head
-
-        while fast.next and fast.next.next:
-            slow = slow.next
-            fast = fast.next.next
-
-        # fast should now point to the last element
-        # slow should now point to middle element
-
-        # disconnect from the middle onwards
-        curr = slow.next
-        slow.next = None
-
-        self.printList(curr)
-
-        # reorder from curr
-        prev = None
-        while curr:
-            tnext = curr.next
-            curr.next = prev
-            prev = curr
-            curr = tnext
-
-        second_list_head = prev
-        self.printList(prev)
-
-        first, second = head, second_list_head
-
-        while first and second:
-            fnext, snext = first.next, second.next
-            first.next = second
-            second.next = fnext
-            first = fnext
-            second = snext
-
-        self.printList(head)
-        return head
+        pass
 
 
 # Each args_tuple contains the arguments to pass to the method

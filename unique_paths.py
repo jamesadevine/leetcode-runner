@@ -27,28 +27,7 @@ the bottom-right corner:
 
 class Solution:
     def uniquePaths(self, m: int, n: int) -> int:
-        if m < 2 or n < 2:
-            return 1
-
-        cols = m
-        rows = n
-
-        dp = [[0] * cols for _ in range(rows)]
-
-        # precompute known values
-        for i in range(cols):
-            dp[0][i] = 1
-
-        for i in range(rows):
-            dp[i][0] = 1
-
-        for i in range(1, rows):
-            for j in range(1, cols):
-                left = dp[i][j - 1]
-                up = dp[i - 1][j]
-                dp[i][j] = left + up
-
-        return dp[n - 1][m - 1]
+        pass
 
 
 TEST_CASES = [

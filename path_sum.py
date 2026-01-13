@@ -46,23 +46,7 @@ class TreeNode:
 
 class Solution:
     def hasPathSum(self, root: Optional[TreeNode], targetSum: int) -> bool:
-        if root is None:
-            return False
-
-        def recursiveSum(node: Optional[TreeNode], path_sum: int) -> bool:
-            if not node:
-                return False
-
-            path_sum += node.val  # Add current node's value FIRST
-
-            if not node.left and not node.right:
-                return path_sum == targetSum  # Now check at leaf
-
-            return recursiveSum(node.left, path_sum) or recursiveSum(
-                node.right, path_sum
-            )
-
-        return recursiveSum(root, 0)
+        pass
 
 
 # Each args_tuple contains the arguments to pass to the method

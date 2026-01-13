@@ -29,44 +29,7 @@ from collections import Counter
 
 class Solution:
     def minWindow(self, s: str, t: str) -> str:
-        if not t or not s:
-            return ""
-
-        # Count characters needed from t
-        need = Counter(t)
-        required = len(need)  # Number of unique chars we need
-        formed = 0  # Number of unique chars with desired frequency
-
-        # Window pointers and answer tracking
-        left = 0
-        result = ""
-        result_len = float("inf")
-
-        for right in range(len(s)):
-            # Expand: add s[right] to window
-            char = s[right]
-            if char in need:
-                need[char] -= 1
-                if need[char] == 0:  # Just satisfied this character
-                    formed += 1
-
-            # Shrink: while window is valid, try to minimize
-            while formed == required:
-                # Record this valid window if it's smaller
-                window_len = right - left + 1
-                if window_len < result_len:
-                    result_len = window_len
-                    result = s[left : right + 1]
-
-                # Remove s[left] from window
-                char = s[left]
-                if char in need:
-                    if need[char] == 0:  # About to lose a satisfied char
-                        formed -= 1
-                    need[char] += 1
-                left += 1
-
-        return result
+        pass
 
 
 # Test cases: list of (args_tuple, expected_output)

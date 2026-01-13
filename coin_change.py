@@ -27,19 +27,7 @@ from typing import List
 
 class Solution:
     def coinChange(self, coins: List[int], amount: int) -> int:
-        # requires dynamic programming
-        dp = [float("inf")] * (amount + 1)
-
-        # there are zero coins required to make 0
-        dp[0] = 0
-
-        # iterate over each amount determining the number of coins that can make each.
-        # skip 0 - we have the answer for that one
-        for i in range(1, amount + 1):
-            for c in coins:
-                if c <= i:
-                    dp[i] = min(dp[i - c] + 1, dp[i])
-        return dp[amount] if dp[amount] != float("inf") else -1
+        pass
 
 
 TEST_CASES = [

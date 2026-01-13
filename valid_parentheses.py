@@ -25,11 +25,6 @@ Example 4:
 Input: s = "([])"
 Output: true
 
-Approach: Stack
-- Push opening brackets onto stack
-- For closing brackets, check if top of stack matches
-- At end, stack should be empty
-
 Time: O(n)
 Space: O(n)
 """
@@ -37,9 +32,19 @@ Space: O(n)
 
 class Solution:
     def isValid(self, s: str) -> bool:
-        # TODO: Implement your solution
-        # Hint: Use a stack and a mapping of closing -> opening brackets
-        pass
+        stack = []
+        bag = {"(": ")", "[": "]", "{": "}"}
+        for c in s:
+            if c in bag.keys():
+                stack.append(c)
+            elif len(stack):
+                popped = stack.pop()
+                if bag[popped] != c:
+                    return False
+            else:
+                return False
+
+        return stack == []
 
 
 # Test cases: list of (args_tuple, expected_output)

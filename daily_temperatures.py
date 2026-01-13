@@ -23,19 +23,7 @@ from typing import List
 
 class Solution:
     def dailyTemperatures(self, temperatures: List[int]) -> List[int]:
-        n = len(temperatures)
-        results = [0] * n
-
-        stack = []
-
-        # build our stack
-        for i in range(n):
-            while len(stack) > 0 and temperatures[i] > temperatures[stack[-1]]:
-                index = stack.pop()
-                results[index] = i - index
-            stack.append(i)
-
-        return results
+        pass
 
 
 # Test cases: list of (args_tuple, expected_output)

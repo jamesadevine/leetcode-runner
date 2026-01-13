@@ -18,15 +18,7 @@ Output: 1
 
 class Solution:
     def numTrees(self, num_trees: int) -> int:
-        root_nodes = range(1, num_trees + 1)
-
-        total = 0
-        for i in root_nodes:
-            left = (i - 1) if i > 1 else 1
-            right = num_trees - i if num_trees != i else 1
-            print(left, right)
-            total += left * right
-        return total
+        pass
 
 
 # Each args_tuple contains the arguments to pass to the method

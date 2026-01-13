@@ -24,15 +24,28 @@ from typing import List
 
 class Solution:
     def rob(self, nums: List[int]) -> int:
-        # this is not left right, it is dp
-        dp = [0] * len(nums)
+        # dp programming problem
+        # what are the base cases...
+        n = len(nums)
+
+        if n == 0:
+            return 0
+        if n == 1:
+            return nums[0]
+
+        dp = [0] * n
+
+        # base case, the maximum you can steal from the first is always the value of the first house
         dp[0] = nums[0]
+        # the second is the max of either
         dp[1] = max(nums[0], nums[1])
 
-        for i in range(2, len(dp)):
-            # we either take the previous node value (noop) or we become the higher value, taking the our value plus the value two houses back
+        # may have to be n + 1?
+        for i in range(2, n):
+            # recurrency relationship:
             dp[i] = max(dp[i - 1], dp[i - 2] + nums[i])
-        return max(dp)
+
+        return dp[n - 1]
 
 
 TEST_CASES = [
@@ -40,6 +53,14 @@ TEST_CASES = [
     (([1, 2, 3, 1],), 4),
     # Example 2: nums = [2,7,9,3,1] → 12 (rob house 0, 2, and 4)
     (([2, 7, 9, 3, 1],), 12),
+    # Bug 1: n < 2 returns length instead of value
+    (([100],), 100),
+    # Bug 2: dp[1] should be max(nums[0], nums[1]), not just nums[1]
+    # Optimal: rob houses 0 and 3 = 9 + 9 = 18
+    (([9, 1, 1, 9],), 18),
+    # Bug 3: recurrence misses the "skip current house" option
+    # Optimal: rob houses 0 and 3 = 2 + 2 = 4
+    (([2, 1, 1, 2],), 4),
 ]
 
 METHOD_NAME = "rob"

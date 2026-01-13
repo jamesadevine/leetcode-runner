@@ -15,26 +15,7 @@ from typing import List
 
 class Solution:
     def isValidSoduku(self, board: List[List[str]]) -> bool:
-        rows = [set() for _ in range(9)]
-        cols = [set() for _ in range(9)]
-        boxes = [set() for _ in range(9)]
-        for i in range(9):
-            for j in range(9):
-                square = board[i][j]
-
-                if square == ".":
-                    continue
-
-                box_idx = (i // 3) * 3 + (j // 3)
-
-                if square in rows[i] or square in cols[j] or square in boxes[box_idx]:
-                    return False
-
-                rows[i].add(square)
-                cols[j].add(square)
-                boxes[box_idx].add(square)
-
-        return True
+        pass
 
 
 # Test cases: list of (args_tuple, expected_output)

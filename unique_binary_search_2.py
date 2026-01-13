@@ -34,23 +34,7 @@ class TreeNode:
 
 class Solution:
     def generateTrees(self, n: int) -> List[Optional[TreeNode]]:
-        def recursiveGenerator(start, end):
-            res = []
-
-            if start > end:
-                return [None]
-
-            for i in range(start, end + 1):
-                left_trees = recursiveGenerator(start, i - 1)
-                right_trees = recursiveGenerator(i + 1, end)
-
-                for left in left_trees:
-                    for right in right_trees:
-                        res.append(TreeNode(i, left, right))
-
-            return res
-
-        return recursiveGenerator(1, n)
+        pass
 
 
 # Each args_tuple contains the arguments to pass to the method

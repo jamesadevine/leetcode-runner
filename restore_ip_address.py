@@ -25,33 +25,7 @@ from typing import List
 
 class Solution:
     def restoreIpAddresses(self, s: str) -> List[str]:
-        results = []
-
-        def backtrack(start: int, segments: List[str]):
-            if len(segments) == 4:
-                if start == len(s):
-                    results.append(".".join(segments))
-                return
-
-            for end in range(start + 1, len(s) + 1):
-                potential_segment = s[start:end]
-                segment_value = int(potential_segment)
-
-                # out of range
-                if segment_value > 0xFF:
-                    continue
-
-                # has leading 0
-                if len(potential_segment) > 1 and potential_segment[0] == "0":
-                    continue
-
-                segments.append(potential_segment)
-                backtrack(end, segments)
-                segments.pop()
-
-        backtrack(0, [])
-        print(results)
-        return results
+        pass
 
 
 # Each args_tuple contains the arguments to pass to the method

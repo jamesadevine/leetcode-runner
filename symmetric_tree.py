@@ -41,22 +41,7 @@ class TreeNode:
 #         self.right = right
 class Solution:
     def isSymmetric(self, root: Optional[TreeNode]) -> bool:
-        def isMirror(left: Optional[TreeNode], right: Optional[TreeNode]):
-            # if we are here, then both trees are equal
-            if not left and not right:
-                return True
-
-            # imbalanced tree, it is not possible to continue
-            if not left or not right:
-                return False
-
-            return (
-                left.val == right.val
-                and isMirror(left.left, right.right)
-                and isMirror(left.right, right.left)
-            )
-
-        return isMirror(root.left, root.right) if root else True
+        pass
 
 
 # Each args_tuple contains the arguments to pass to the method
