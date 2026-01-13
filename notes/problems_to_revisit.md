@@ -89,23 +89,20 @@ With just visited set, reaching C from D after visiting it from B looks like a c
 
 ---
 
-## 🔄 Trapping Rain Water (Practice)
-**Status:** Solved ✓ — added for reinforcement
+## ⚠️ Trapping Rain Water (Produce O(n) solution)
+**Status:** Solved with O(n²) — need to implement O(n) approach
 
 **Key insight:** Water at position `i` = `min(maxLeft, maxRight) - height[i]`
 
-**DP Approach:**
-- **Base cases:** `maxLeft[0] = height[0]`, `maxRight[n-1] = height[n-1]`
-- **Recurrence:**
-  - `maxLeft[i] = max(maxLeft[i-1], height[i])` (left → right)
-  - `maxRight[i] = max(maxRight[i+1], height[i])` (right → left)
-- **Answer:** `sum(min(maxLeft[i], maxRight[i]) - height[i])`
+**Current solution:** O(n²) — recalculates max left/right for each position
 
-**Time:** O(n), **Space:** O(n)
-
-**Bonus - Two Pointer O(1) space:**
-- Use `left` and `right` pointers with `maxLeft` and `maxRight` as single variables
-- Move the pointer on the smaller side inward (that side is the bottleneck)
+**Goal: Two Pointer O(n) time, O(1) space:**
+- Use `left` and `right` pointers starting at opposite ends
+- Track `maxLeft` and `maxRight` as single variables
+- **Key rule:** Process the pointer on the smaller max side (that side is the bottleneck)
+- If `maxLeft < maxRight`: move left pointer, calculate water using maxLeft
+- Else: move right pointer, calculate water using maxRight
+- **Why it works:** The smaller max is guaranteed to be the bottleneck — the other side can only get larger
 
 ---
 
@@ -116,4 +113,4 @@ With just visited set, reaching C from D after visiting it from B looks like a c
 | LIS | ⚠️ | Learn O(n log n) binary search approach |
 | Median of Two Sorted Arrays | ❌ | Learn partition-based binary search |
 | Course Schedule | ⚠️ | Need 3-state DFS or Kahn's algorithm |
-| Trapping Rain Water | 🔄 | Practice reinforcement |
+| Trapping Rain Water | ⚠️ | Implement O(n) two-pointer solution |
