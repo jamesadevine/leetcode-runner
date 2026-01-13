@@ -39,12 +39,6 @@ Constraints:
 - -10^9 <= nums1[i], nums2[j] <= 10^9
 
 Follow up: Can you come up with an algorithm that runs in O(m + n) time?
-
-Approach: Two Pointers (from the back)
-- Start from the end of both arrays
-- Compare and place larger element at the back of nums1
-- Fill from back to front to avoid overwriting
-- O(m + n) time, O(1) space
 """
 
 from typing import List
@@ -55,7 +49,31 @@ class Solution:
         """
         Do not return anything, modify nums1 in-place instead.
         """
-        pass
+        writer = m + n - 1
+        left, right = m - 1, n - 1
+
+        # work from the back of each list, forwards (as the writer starts at the empty gaps)
+        while left >= 0 and right >= 0:
+            if nums1[left] >= nums2[right]:
+                nums1[writer] = nums1[left]
+                left -= 1
+            else:
+                nums1[writer] = nums2[right]
+                right -= 1
+            writer -= 1
+
+        if left >= 0:
+            while writer >= 0:
+                nums1[writer] = nums1[left]
+                left -= 1
+                writer -= 1
+
+        if right >= 0:
+            while writer >= 0:
+                nums1[writer] = nums2[right]
+                right -= 1
+                writer -= 1
+        print(nums1)
 
 
 # Test cases: list of (args_tuple, expected_output)

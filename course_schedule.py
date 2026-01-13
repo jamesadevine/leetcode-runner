@@ -33,8 +33,45 @@ from collections import defaultdict
 
 class Solution:
     def canFinish(self, numCourses: int, prerequisites: List[List[int]]) -> bool:
-        # try again another time.
-        pass
+        # build a map of courses and prereqs
+        courses = defaultdict(list)
+
+        for course, prereq in prerequisites:
+            courses[course].append(prereq)
+
+        # need to maintain which courses have been visited
+        # 0 not visited
+        # 1 visiting
+        # 2 already validated
+        state = [0] * numCourses
+
+        def traverse(course) -> bool:
+            # cycle!
+            if state[course] == 1:
+                return False
+
+            # already processed as safe
+            if state[course] == 2:
+                return True
+
+            state[course] = 1
+
+            for prereq in courses[course]:
+                if not traverse(prereq):
+                    return False
+
+            state[course] = 2
+
+            return True
+
+        return all(
+            [
+                traverse(
+                    i,
+                )
+                for i in range(numCourses)
+            ]
+        )
 
 
 # Test cases: list of (args_tuple, expected_output)
