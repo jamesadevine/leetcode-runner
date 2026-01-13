@@ -40,18 +40,7 @@ from typing import List
 
 class Solution:
     def twoSum(self, numbers: List[int], target: int) -> List[int]:
-        left = 0
-        right = len(numbers) - 1
-
-        while left < right:
-            ptr_sum = numbers[left] + numbers[right]
-
-            if ptr_sum == target:
-                return [left + 1, right + 1]
-            elif ptr_sum < target:
-                left += 1
-            elif ptr_sum > target:
-                right -= 1
+        pass
 
 
 # Test cases: list of (args_tuple, expected_output)

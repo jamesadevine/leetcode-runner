@@ -37,41 +37,7 @@ from typing import List
 
 class Solution:
     def threeSum(self, nums: List[int]) -> List[List[int]]:
-        if len(nums) < 3:
-            return []
-
-        results = []
-
-        # sort input array
-        nums = sorted(nums)
-
-        for fixed in range(0, len(nums)):
-            if fixed > 0 and nums[fixed] == nums[fixed - 1]:
-                continue
-
-            left, right = fixed + 1, len(nums) - 1
-            target = -nums[fixed]
-
-            while left < right:
-                ptr_sum = nums[left] + nums[right]
-
-                if ptr_sum == target:
-                    results.append([nums[fixed], nums[left], nums[right]])
-                    # Move both pointers inward, skipping duplicates
-                    left += 1
-                    right -= 1
-                    while left < right and nums[left] == nums[left - 1]:
-                        left += 1
-                    while left < right and nums[right] == nums[right + 1]:
-                        right -= 1
-                elif ptr_sum < target:
-                    # result too small, increase left value
-                    left += 1
-                elif ptr_sum > target:
-                    # result too big, decrease right value
-                    right -= 1
-
-        return results
+        pass
 
 
 # Test cases: list of (args_tuple, expected_output)

@@ -18,29 +18,7 @@ from typing import List
 
 class Solution:
     def partition(self, s: str) -> List[List[str]]:
-        # a palindrom can be a single character or multiple characters
-        # each pass should consider all palindromes
-
-        results = []
-
-        def backtrack(start: int, partitions: List[int]):
-            if start >= len(s):
-                results.append(partitions[:])
-                return
-
-            for end in range(start + 1, len(s) + 1):
-                substring = s[start:end]
-
-                if substring == substring[::-1]:
-                    partitions.append(substring)
-                    backtrack(end, partitions)
-                    partitions.pop()
-
-            print(partitions)
-
-        backtrack(0, [])
-
-        return results
+        pass
 
 
 # Each args_tuple contains the arguments to pass to the method

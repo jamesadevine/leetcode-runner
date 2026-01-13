@@ -31,41 +31,7 @@ s consists of English letters, digits, symbols and spaces.
 
 class Solution:
     def lengthOfLongestSubstring(self, s: str) -> int:
-        left = 0
-        max_len = 0
-        seen = set()
-
-        for right in range(len(s)):
-            # remove everything in the seen window up to and including the duplicate!!!
-            while s[right] in seen:
-                seen.remove(s[left])
-                left += 1
-
-            seen.add(s[right])
-
-            max_len = max(right - left + 1, max_len)
-
-        return max_len
-
-    # this is not a sliding window apparently
-    # def lengthOfLongestSubstring(self, s: str) -> int:
-    #     longest_substring = ""
-    #     for window_len in range(1, len(s)):
-    #         for i in range(len(s) - window_len):
-    #             substring = s[i : i + window_len]
-
-    #             vals = {}
-    #             valid = True
-    #             for v in substring:
-    #                 if v in vals:
-    #                     valid = False
-    #                     break
-    #                 vals[v] = 1
-
-    #             if valid and window_len > len(longest_substring):
-    #                 longest_substring = substring
-
-    #     return len(longest_substring)
+        pass
 
 
 TEST_CASES = [

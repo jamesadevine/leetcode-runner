@@ -13,23 +13,7 @@ from typing import List
 
 class Solution:
     def candy(self, ratings: List[int]) -> int:
-        n = len(ratings)
-        candy = [1] * n
-
-        # walk up the list first, handle left neighbour constraint
-        for i in range(1, n):
-            current_rating = ratings[i]
-            if current_rating > ratings[i - 1]:
-                candy[i] = candy[i - 1] + 1
-
-        # walk down the list next handle right neighbour constraint
-        for i in range(n - 2, -1, -1):
-            current_rating = ratings[i]
-
-            if current_rating > ratings[i + 1]:
-                candy[i] = max(candy[i], candy[i + 1] + 1)
-
-        return sum(candy)
+        pass
 
 
 # Each args_tuple contains the arguments to pass to the method

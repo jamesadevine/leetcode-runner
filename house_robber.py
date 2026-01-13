@@ -24,15 +24,7 @@ from typing import List
 
 class Solution:
     def rob(self, nums: List[int]) -> int:
-        # this is not left right, it is dp
-        dp = [0] * len(nums)
-        dp[0] = nums[0]
-        dp[1] = max(nums[0], nums[1])
-
-        for i in range(2, len(dp)):
-            # we either take the previous node value (noop) or we become the higher value, taking the our value plus the value two houses back
-            dp[i] = max(dp[i - 1], dp[i - 2] + nums[i])
-        return max(dp)
+        pass
 
 
 TEST_CASES = [

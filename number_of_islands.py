@@ -31,33 +31,7 @@ from typing import List
 
 class Solution:
     def numIslands(self, grid: List[List[str]]) -> int:
-        count = 0
-        x_len = len(grid[0])
-        y_len = len(grid)
-
-        # find a one, recursively sink 1 -> 0
-        def sink(x: int, y: int):
-            if x < 0 or x >= x_len:
-                return
-            if y < 0 or y >= y_len:
-                return
-            if grid[y][x] == "0":
-                return
-
-            grid[y][x] = "0"
-
-            sink(x + 1, y)
-            sink(x - 1, y)
-            sink(x, y + 1)
-            sink(x, y - 1)
-
-        for y in range(y_len):
-            for x in range(x_len):
-                if grid[y][x] == "1":
-                    count += 1
-                    sink(x, y)
-
-        return count
+        pass
 
 
 # Test cases: list of (args_tuple, expected_output)

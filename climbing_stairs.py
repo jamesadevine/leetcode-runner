@@ -33,21 +33,7 @@ Explanation: There are three ways to climb to the top.
 
 class Solution:
     def climbStairs(self, n: int) -> int:
-        known = [0, 1, 2]
-        if n in known:
-            return known[n]
-
-        # we are seeking the maxmimum value here
-        # each dp represents the number of different combos
-        dp = [0] * n
-
-        dp[0] = 1
-        dp[1] = 2
-
-        for i in range(2, len(dp)):
-            dp[i] = dp[i - 1] + dp[i - 2]
-
-        return dp[n - 1] if dp[n - 1] != 0 else -1
+        pass
 
 
 TEST_CASES = [

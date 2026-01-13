@@ -44,36 +44,7 @@ return heap[0]
 class Solution:
     def findKthLargest(self, nums: List[int], k: int) -> int:
         """Quick Select approach - O(n) average time, O(1) space"""
-        target = len(nums) - k  # Index where kth largest would be if sorted
-
-        def partition(left: int, right: int) -> int:
-            """Lomuto partition: pivot is last element"""
-            pivot = nums[right]
-            store = left
-
-            for i in range(left, right):
-                if nums[i] < pivot:
-                    nums[store], nums[i] = nums[i], nums[store]
-                    store += 1
-
-            # Put pivot in its final position
-            nums[store], nums[right] = nums[right], nums[store]
-            return store
-
-        def quick_select(left: int, right: int) -> int:
-            if left == right:
-                return nums[left]
-
-            pivot_idx = partition(left, right)
-
-            if pivot_idx == target:
-                return nums[pivot_idx]
-            elif pivot_idx < target:
-                return quick_select(pivot_idx + 1, right)  # Go right
-            else:
-                return quick_select(left, pivot_idx - 1)  # Go left
-
-        return quick_select(0, len(nums) - 1)
+        pass
 
 
 # Test cases: list of (args_tuple, expected_output)

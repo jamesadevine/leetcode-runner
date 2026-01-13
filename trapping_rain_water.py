@@ -32,27 +32,7 @@ class Solution:
         - 1 <= n <= 2 * 10^4
         - 0 <= height[i] <= 10^5
         """
-
-        n = len(height)
-
-        if n == 0:
-            return 0
-
-        dp = [0] * n
-
-        # base cases
-        # we know no water can be trapped here
-        dp[0] = 0
-        dp[n - 1] = 0
-
-        for i in range(1, n - 1):
-            max_left = max([height[j] for j in range(i)])
-            max_right = max([height[j] for j in range(i + 1, n)])
-
-            if height[i] < max_left and height[i] < max_right:
-                dp[i] = min(max_left, max_right) - height[i]
-
-        return sum(dp)
+        pass
 
 
 # Test cases: list of (args_tuple, expected_output)

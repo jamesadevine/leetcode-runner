@@ -19,30 +19,8 @@ from typing import List
 
 
 class Solution:
-    # def majorityElement(self, nums: List[int]) -> int:
-    #     results = {}
-    #     n = len(nums)
-    #     for i in range(n):
-    #         val = nums[i]
-    #         if val not in results:
-    #             results[val] = 1
-    #         else:
-    #             results[val] += 1
-
-    #         if results[val] > n // 2:
-    #             return val
-
     def majorityElement(self, nums: List[int]) -> int:
-        # roger moore candidate voting algo
-        candidate = None
-        count = 0
-        for num in nums:
-            if count == 0:
-                candidate = num
-
-            count = count + 1 if candidate == num else count - 1
-
-        return candidate
+        pass
 
 
 # Each args_tuple contains the arguments to pass to the method

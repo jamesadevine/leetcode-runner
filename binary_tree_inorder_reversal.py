@@ -55,21 +55,7 @@ class TreeNode:
 
 class Solution:
     def inorderTraversal(self, root: Optional[TreeNode]) -> List[int]:
-        if root is None:
-            return []
-
-        result = []
-
-        def depthFirstSearch(node):
-            if node is None:
-                return
-            depthFirstSearch(node.left)
-            result.append(node.val)
-            depthFirstSearch(node.right)
-
-        depthFirstSearch(root)
-
-        return result
+        pass
 
 
 # Each args_tuple contains the arguments to pass to the method
