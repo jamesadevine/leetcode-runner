@@ -8,6 +8,15 @@ invoke the specified method with your test cases.
 from typing import List
 
 
+class TrieNode:
+    def __init__(self):
+        self.children = {}  # char → TrieNode
+        self.word = None
+
+    def __str__(self):
+        return f"{self.children} {self.word}"
+
+
 class Solution:
     def findWords(self, board: List[List[str]], words: List[str]) -> List[str]:
         """
@@ -41,18 +50,58 @@ class Solution:
         - 1 <= words[i].length <= 10
         - words[i] consists of lowercase English letters.
         - All the strings of words are unique.
-
-        Approach: Trie + Backtracking
-        - Build a Trie from all words
-        - DFS from each cell, following Trie paths
-        - Prune branches when no Trie path exists
-        - Remove found words from Trie to avoid duplicates
         """
-        pass
+
+        cols = len(board[0])
+        rows = len(board)
+
+        results = []
+
+        root = TrieNode()
+        for word in words:
+            node = root
+
+            # for each character in the word, descend and store the next character
+            # at the end store the word, so when the final node is visited we know the word
+            for char in word:
+                if char not in node.children:
+                    node.children[char] = TrieNode()
+                node = node.children[char]
+            node.word = word
+
+        def search_word(row: int, col: int, node: TrieNode):
+            if row < 0 or col < 0 or row >= rows or col >= cols:
+                return
+
+            char = board[row][col]
+
+            if char not in node.children:
+                return
+
+            node = node.children[char]
+
+            if node.word and node.word not in results:
+                results.append(node.word)
+                node.word = None
+                # don't return here because the found word may be a sub word?
+
+            board[row][col] = "#"
+            search_word(row + 1, col, node)
+            search_word(row - 1, col, node)
+            search_word(row, col + 1, node)
+            search_word(row, col - 1, node)
+            board[row][col] = char
+
+        for row in range(rows):
+            for col in range(cols):
+                search_word(row, col, root)
+
+        return results
 
 
 # Test cases: list of (args_tuple, expected_output)
 TEST_CASES = [
+    # Basic example from problem
     (
         (
             [
@@ -65,7 +114,76 @@ TEST_CASES = [
         ),
         ["eat", "oath"],
     ),
-    (([["a", "b"], ["c", "d"]], ["abcb"]),),
+    # No matches
+    (([["a", "b"], ["c", "d"]], ["abcb"]), []),
+    # Subwords: "art" is prefix of "artist"
+    (
+        (
+            [
+                ["a", "r", "t", "i"],
+                ["x", "x", "s", "s"],
+                ["x", "x", "t", "t"],
+            ],
+            ["art", "artist"],
+        ),
+        ["art", "artist"],
+    ),
+    # Subwords: "a" → "ab" → "abc" (nested prefixes)
+    (
+        (
+            [
+                ["a", "b", "c"],
+            ],
+            ["a", "ab", "abc"],
+        ),
+        ["a", "ab", "abc"],
+    ),
+    # Same word findable from multiple paths - should only appear once
+    (
+        (
+            [
+                ["a", "a"],
+                ["a", "a"],
+            ],
+            ["aa", "aaa"],
+        ),
+        ["aa", "aaa"],
+    ),
+    # Longer word contains shorter: "the" vs "there" vs "thereafter"
+    (
+        (
+            [
+                ["t", "h", "e", "r", "e"],
+                ["x", "x", "a", "f", "t"],
+                ["x", "x", "e", "r", "x"],
+            ],
+            ["the", "there", "thereafter", "her"],
+        ),
+        ["the", "there", "her"],
+    ),
+    # Word requires backtracking path (can't just go straight)
+    (
+        (
+            [
+                ["a", "b"],
+                ["c", "d"],
+            ],
+            ["acdb", "abcd", "abdc"],
+        ),
+        ["abdc", "acdb"],
+    ),
+    # Empty results - words exist but not on board
+    (
+        (
+            [
+                ["x", "y", "z"],
+            ],
+            ["abc", "def"],
+        ),
+        [],
+    ),
+    # Single cell board
+    (([["a"]], ["a", "b", "aa"]), ["a"]),
 ]
 
 # Name of the method to test

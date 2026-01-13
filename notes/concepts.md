@@ -94,6 +94,80 @@ def mergeTwoLists(list1, list2):
 - **Merge K Sorted**: Use heap to track smallest across lists
 - **Median Finding**: Two heaps (max-heap for lower half, min-heap for upper)
 
+### Tries (Prefix Trees)
+
+A **Trie** is a tree where each path from root represents a prefix. Used for efficient string/prefix operations.
+
+**Visual Example** for words `["cat", "car", "card", "dog"]`:
+```
+        (root)
+        /    \
+       c      d
+       |      |
+       a      o
+      / \     |
+     t*  r*   g*
+         |
+         d*
+
+* = end of word
+```
+
+**When to use:**
+- Autocomplete / prefix matching
+- Spell checking
+- Word Search II (search many words simultaneously)
+- Finding words with common prefix
+- IP routing (longest prefix match)
+
+**Why it's fast:**
+- Without Trie: "Is `car` in 30,000 words?" → O(30,000)
+- With Trie: Follow 3 edges → O(word length)
+
+**Basic Implementation:**
+```python
+class TrieNode:
+    def __init__(self):
+        self.children = {}   # char → TrieNode
+        self.word = None     # the word, if this node ends one
+
+# Build trie from word list
+root = TrieNode()
+for word in words:
+    node = root
+    for char in word:
+        if char not in node.children:
+            node.children[char] = TrieNode()
+        node = node.children[char]
+    node.word = word  # mark end of word
+
+# Search for a word
+def search(word):
+    node = root
+    for char in word:
+        if char not in node.children:
+            return False
+        node = node.children[char]
+    return node.word is not None
+
+# Check if any word starts with prefix
+def starts_with(prefix):
+    node = root
+    for char in prefix:
+        if char not in node.children:
+            return False
+        node = node.children[char]
+    return True
+```
+
+**Complexity:**
+- Build: O(total characters across all words)
+- Search/Insert: O(word length)
+- Space: O(total characters) worst case, but shared prefixes save space
+
+**Word Search II pattern:**
+Instead of searching each word separately, DFS the board while walking the Trie. When `board[row][col]` matches a child in the current Trie node, go deeper. When you hit a node with `word != None`, you found a match.
+
 ---
 
 ## Algorithmic Techniques
