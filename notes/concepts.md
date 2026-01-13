@@ -16,6 +16,57 @@ A summary of key concepts, patterns, and techniques for solving LeetCode problem
 - **Dummy Head**: Simplifies edge cases when head might change
 - **Pointer Switching**: Traverse both lists to synchronize lengths (intersection problem)
 
+#### Dummy Node Pattern (Sentinel Node)
+
+Use a dummy node when **building a new linked list** and you don't know which node will be the head upfront.
+
+**When to use:**
+- Merging two or more lists
+- Filtering/partitioning a list
+- Any operation where the head might change or isn't known initially
+- You find yourself writing special logic for "the first node"
+
+**The pattern:**
+```python
+dummy = ListNode()      # Sentinel - will be discarded
+writer = dummy          # Writer advances as we build
+
+while condition:
+    writer.next = new_node
+    writer = writer.next
+
+return dummy.next       # Skip the dummy, return real head
+```
+
+**Why it works:**
+- Eliminates null checks for "is this the first node?"
+- You always write to `writer.next`, never need special head logic
+- Handles empty input lists gracefully (just returns `None`)
+
+**Example - Merge Two Sorted Lists:**
+```python
+def mergeTwoLists(list1, list2):
+    dummy = ListNode()
+    writer = dummy
+
+    while list1 and list2:
+        if list1.val <= list2.val:
+            writer.next = list1
+            list1 = list1.next
+        else:
+            writer.next = list2
+            list2 = list2.next
+        writer = writer.next
+
+    writer.next = list1 or list2  # Attach remaining
+    return dummy.next
+```
+
+**Without dummy node** you'd need:
+- Null checks before the loop to handle empty lists
+- Special logic to determine which node becomes head
+- Different initialization paths based on the first comparison
+
 ### Hash Maps / Sets
 - **Frequency Count**: Count occurrences of elements
 - **Two Sum Pattern**: Store complements for O(1) lookup
@@ -360,15 +411,96 @@ def backtrack(path, choices):
 
 ---
 
-## Problem-Solving Framework
+## Problem-Solving Strategy
 
-1. **Understand**: Read carefully, identify inputs/outputs, clarify constraints
-2. **Examples**: Work through examples by hand
-3. **Pattern Match**: Does this look like a known problem type?
-4. **Brute Force**: What's the naive solution? What's its complexity?
-5. **Optimize**: Can you use a better data structure? Algorithm?
-6. **Implement**: Write clean code, handle edge cases
-7. **Test**: Verify with examples, think of edge cases
+A systematic approach for tackling LeetCode problems.
+
+### 🧠 Before Writing Code
+
+#### 1. Work Through an Example BY HAND
+- Grab pen and paper (seriously!)
+- Walk through the example step by step
+- Write down what you're doing at each step
+- This reveals the algorithm naturally
+
+Example for merge sorted array:
+```
+nums1 = [1,2,3,_,_,_]  nums2 = [2,5,6]
+                 ^write            ^p2
+           ^p1
+
+Compare 3 vs 6 → 6 wins → write 6
+nums1 = [1,2,3,_,_,6]
+              ^write
+...
+```
+You'll *see* that you need 3 pointers and which direction they move.
+
+#### 2. Ask "What Are My Inputs? What Changes?"
+- What am I reading from?
+- What am I writing to?
+- Each "thing" often needs a pointer
+
+#### 3. Ask "Why Might the Obvious Approach Fail?"
+- Front-to-back merge fails because... overwriting!
+- That tells you: try back-to-front
+- The failure mode hints at the solution
+
+---
+
+### 🔧 While Writing Code
+
+#### 4. Handle the "Happy Path" First
+- Ignore edge cases initially
+- Get the core loop working
+- Add bounds checking after
+
+#### 5. Name Variables Clearly
+- `p1, p2, write` not `i, j, k`
+- When you swap variables by accident, good names make it obvious
+- Match names to what they represent (pointer into nums1 → p1)
+
+---
+
+### 🐛 When Stuck
+
+#### 6. Print Everything
+```python
+print(f"p1={p1} p2={p2} write={write}")
+print(f"nums1={nums1}")
+```
+Watch the state evolve - where does it diverge from your hand trace?
+
+#### 7. Check the Boundaries
+- Off-by-one errors are everywhere
+- `>` vs `>=`, `< n` vs `<= n`
+- What happens at index 0? At the last index?
+- What if one input is empty?
+
+#### 8. Compare Code to Hand Trace
+- Your hand trace is the "correct" algorithm
+- Line up your code with each step
+- Where do they diverge?
+
+---
+
+### 💡 Common Gotchas
+
+| Symptom | Likely Cause |
+|---------|--------------|
+| Index out of bounds | Missing bounds check before array access |
+| Infinite loop | Forgot to move a pointer |
+| Wrong output | Pointer initialized wrong, or wrong comparison |
+| Off-by-one | `>` vs `>=`, or wrong starting index |
+| Works on some cases | Missing edge case (empty input, single element) |
+
+---
+
+### The Meta-Lesson
+
+Often you're not missing the algorithm - you have it! Small typos and variable swaps are hard to spot by staring at code. The pen-and-paper trace catches them faster.
+
+**When frustrated:** Step away from code → trace by hand → compare.
 
 ---
 

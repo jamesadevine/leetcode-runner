@@ -29,11 +29,63 @@ def format_value(value: Any, max_length: int = 50) -> str:
     return s
 
 
+class ListNode:
+    """Standard LeetCode ListNode for linked list problems."""
+
+    def __init__(self, val: int = 0, next: "ListNode | None" = None):
+        self.val = val
+        self.next = next
+
+    def __str__(self):
+        curr = self
+        text = "["
+        while curr:
+            text += f"{curr.val}, "
+            curr = curr.next
+        text += "]"
+        return text
+
+
+def list_to_linked(arr: list) -> "ListNode | None":
+    """Convert a Python list to a linked list."""
+    if not arr:
+        return None
+    head = ListNode(arr[0])
+    current = head
+    for val in arr[1:]:
+        current.next = ListNode(val)
+        current = current.next
+    return head
+
+
+def linked_to_list(head: "ListNode | None") -> list:
+    """Convert a linked list to a Python list."""
+    result = []
+    while head:
+        result.append(head.val)
+        head = head.next
+    return result
+
+
+def is_listnode(obj: Any) -> bool:
+    """Check if an object is a ListNode (from any module)."""
+    return obj is not None and type(obj).__name__ == "ListNode"
+
+
 def values_equal(actual: Any, expected: Any) -> bool:
     """
     Compare two values for equality.
-    Handles special cases like unordered list comparison.
+    Handles special cases like unordered list comparison and linked lists.
     """
+    # Handle linked list comparison
+    if is_listnode(actual) and is_listnode(expected):
+        while actual and expected:
+            if actual.val != expected.val:
+                return False
+            actual = actual.next
+            expected = expected.next
+        return actual is None and expected is None
+
     # For lists that represent unordered results (like two sum indices)
     # you might want to sort them before comparing
     if isinstance(actual, list) and isinstance(expected, list):
@@ -81,12 +133,22 @@ def run_tests(solution_file: str = "solution.py"):
     method_name = module.METHOD_NAME
     test_cases = module.TEST_CASES
 
+    # Check for in-place modification flag
+    inplace_arg_index = getattr(module, "INPLACE_ARG_INDEX", None)
+
+    # Check for linked list args flag
+    linked_list_args = getattr(module, "LINKED_LIST_ARGS", False)
+
     if not hasattr(solution, method_name):
         print(f"❌ Error: Method '{method_name}' not found in Solution class")
         sys.exit(1)
 
     method = getattr(solution, method_name)
     print(f"🔧 Method: {method_name}")
+    if inplace_arg_index is not None:
+        print(f"📌 In-place modification: arg[{inplace_arg_index}]")
+    if linked_list_args:
+        print(f"🔗 Linked list conversion enabled")
     print(f"📝 Test cases: {len(test_cases)}")
     print("=" * 60)
 
@@ -101,12 +163,33 @@ def run_tests(solution_file: str = "solution.py"):
         if not isinstance(args, tuple):
             args = (args,)
 
+        # Deep copy args for in-place problems (so original test cases aren't mutated)
+        import copy
+
+        args = tuple(copy.deepcopy(arg) for arg in args)
+
+        # Convert list args to linked lists if needed
+        if linked_list_args:
+            args = tuple(
+                list_to_linked(arg) if isinstance(arg, list) else arg for arg in args
+            )
+
         # Run the test
         start_time = time.perf_counter()
         try:
-            actual = method(*args)
+            result = method(*args)
             elapsed = (time.perf_counter() - start_time) * 1000  # ms
             total_time += elapsed
+
+            # For in-place modifications, check the modified argument instead of return value
+            if inplace_arg_index is not None:
+                actual = args[inplace_arg_index]
+            else:
+                actual = result
+
+            # Convert linked list result to list for comparison if needed
+            if linked_list_args and is_listnode(actual):
+                actual = linked_to_list(actual)
 
             if values_equal(actual, expected):
                 passed += 1

@@ -33,39 +33,38 @@ Approach: Two Pointers / Iterative
 """
 
 from typing import Optional
-
-
-class ListNode:
-    def __init__(self, val: int = 0, next: "ListNode | None" = None):
-        self.val = val
-        self.next = next
+from runner import ListNode
 
 
 class Solution:
     def mergeTwoLists(
         self, list1: Optional[ListNode], list2: Optional[ListNode]
     ) -> Optional[ListNode]:
-        pass
+        # the first value of each list is the lowest, the lower of the two will be the head
 
+        dummy = ListNode()
+        writer = dummy
+        p1 = list1
+        p2 = list2
 
-# Helper functions for testing
-def list_to_linked(arr: list) -> Optional[ListNode]:
-    if not arr:
-        return None
-    head = ListNode(arr[0])
-    current = head
-    for val in arr[1:]:
-        current.next = ListNode(val)
-        current = current.next
-    return head
+        while p1 and p2:
+            if p1.val < p2.val:
+                tmp = p1.next
+                p1.next = None
+                writer.next = p1
+                p1 = tmp
+            else:
+                tmp = p2.next
+                p2.next = None
+                writer.next = p2
+                p2 = tmp
+            writer = writer.next
+        if p1:
+            writer.next = p1
+        if p2:
+            writer.next = p2
 
-
-def linked_to_list(head: Optional[ListNode]) -> list:
-    result = []
-    while head:
-        result.append(head.val)
-        head = head.next
-    return result
+        return dummy.next
 
 
 # Test cases: list of (args_tuple, expected_output)

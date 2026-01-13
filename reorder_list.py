@@ -78,31 +78,20 @@ class Solution:
 # Each args_tuple contains the arguments to pass to the method
 TEST_CASES = [
     # Even length: [1,2,3,4] -> [1,4,2,3]
-    (
-        (ListNode(1, ListNode(2, ListNode(3, ListNode(4))))),
-        (ListNode(1, ListNode(4, ListNode(2, ListNode(3))))),
-    ),
+    (([1, 2, 3, 4],), [1, 4, 2, 3]),
     # Odd length: [1,2,3,4,5] -> [1,5,2,4,3]
-    (
-        (ListNode(1, ListNode(2, ListNode(3, ListNode(4, ListNode(5)))))),
-        (ListNode(1, ListNode(5, ListNode(2, ListNode(4, ListNode(3)))))),
-    ),
+    (([1, 2, 3, 4, 5],), [1, 5, 2, 4, 3]),
     # Two elements: [1,2] -> [1,2]
-    (
-        (ListNode(1, ListNode(2))),
-        (ListNode(1, ListNode(2))),
-    ),
+    (([1, 2],), [1, 2]),
     # Single element: [1] -> [1]
-    (
-        (ListNode(1)),
-        (ListNode(1)),
-    ),
+    (([1],), [1]),
     # Three elements: [1,2,3] -> [1,3,2]
-    (
-        (ListNode(1, ListNode(2, ListNode(3)))),
-        (ListNode(1, ListNode(3, ListNode(2)))),
-    ),
+    (([1, 2, 3],), [1, 3, 2]),
 ]
 
 # Name of the method to test
 METHOD_NAME = "reorderList"
+
+# Linked list args conversion + in-place modification
+LINKED_LIST_ARGS = True
+INPLACE_ARG_INDEX = 0

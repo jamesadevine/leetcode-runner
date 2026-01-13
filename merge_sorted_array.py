@@ -55,7 +55,16 @@ class Solution:
         """
         Do not return anything, modify nums1 in-place instead.
         """
-        pass
+        write, p1, p2 = m + n - 1, m - 1, n - 1
+
+        while write >= 0:
+            if p1 < 0 or (p2 > 0 and nums2[p2] > nums1[p1]):
+                nums1[write] = nums2[p2]
+                p2 -= 1
+            else:
+                nums1[write] = nums1[p1]
+                p1 -= 1
+            write -= 1
 
 
 # Test cases: list of (args_tuple, expected_output)
