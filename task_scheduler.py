@@ -41,14 +41,45 @@ class Solution:
         - 1 <= tasks.length <= 10^4
         - tasks[i] is an uppercase English letter.
         - 0 <= n <= 100
-
-        Approaches:
-        1. Greedy with formula: (maxFreq - 1) * (n + 1) + countOfMaxFreq
-           - But take max with len(tasks) since no idle may be needed
-        2. Max Heap: Always pick the task with highest remaining count
-           - Use heap + cooldown queue
         """
+
         pass
+
+        # if n == 0:
+        #     return len(tasks)
+
+        # # at symbol represents idle task
+        # idle_task = "@"
+        # task_len = len(tasks)
+        # result = task_len + 1  # out of range of possible min n
+
+        # def schedule(
+        #     previous_tasks: List[str], remaining_tasks: List[str], idle_count: int
+        # ):
+        #     nonlocal result
+        #     if remaining_tasks == []:
+        #         if idle_count < result:
+        #             result = idle_count + len(tasks)
+        #         return
+
+        #     i = 0
+        #     while i < len(remaining_tasks) and remaining_tasks[i] in previous_tasks:
+        #         i += 1
+        #     next_task = remaining_tasks[i] if i < len(remaining_tasks) else None
+
+        #     # bump from the window
+        #     previous_tasks.pop()
+
+        #     if next_task is None:
+        #         idle_count += 1
+        #         next_task = idle_task
+        #     else:
+        #         remaining_tasks = remaining_tasks[:i] + remaining_tasks[i + 1 :]
+
+        #     schedule([next_task] + previous_tasks, remaining_tasks, idle_count)
+
+        # schedule([idle_task for _ in range(n)], tasks, 0)
+        # return result
 
 
 # Test cases: list of (args_tuple, expected_output)

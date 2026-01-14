@@ -15,7 +15,40 @@ from typing import List
 
 class Solution:
     def isValidSoduku(self, board: List[List[str]]) -> bool:
-        pass
+        BOARD_DIMS = 9
+        cols = [set() for _ in range(BOARD_DIMS)]
+        rows = [set() for _ in range(BOARD_DIMS)]
+        boxes = [set() for _ in range(BOARD_DIMS)]
+
+        for row in range(9):
+            for col in range(9):
+                print(f"{row} {col}")
+                num = board[row][col]
+
+                if num == ".":
+                    continue
+
+                box_index = ((row // 3) * 3) + (col // 3)
+
+                if num in cols[col]:
+                    print(f"invalid col: {num} {row} {col} {cols[col]}")
+                    return False
+                else:
+                    cols[col].add(num)
+
+                if num in rows[row]:
+                    print("invalid row")
+                    return False
+                else:
+                    rows[row].add(num)
+
+                if num in boxes[box_index]:
+                    print("invalid box")
+                    return False
+                else:
+                    boxes[box_index].add(num)
+
+        return True
 
 
 # Test cases: list of (args_tuple, expected_output)
