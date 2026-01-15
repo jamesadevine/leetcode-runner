@@ -27,14 +27,14 @@ class Solution:
         Constraints:
         - 1 <= haystack.length, needle.length <= 10^4
         - haystack and needle consist of only lowercase English characters.
-
-        Approaches:
-        1. Brute Force: O(n*m) - check each starting position
-        2. KMP Algorithm: O(n+m) - build failure function, never backtrack
-        3. Rabin-Karp: O(n+m) avg - rolling hash
-        4. Z-Algorithm: O(n+m) - Z-array for pattern matching
         """
-        pass
+
+        # don't need to search whole string
+        for i in range(len(haystack) - len(needle) + 1):
+            if haystack[i : i + len(needle)] == needle:
+                return i
+
+        return -1
 
 
 # Test cases: list of (args_tuple, expected_output)

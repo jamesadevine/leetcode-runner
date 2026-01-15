@@ -33,7 +33,28 @@ Explanation: There are three ways to climb to the top.
 
 class Solution:
     def climbStairs(self, n: int) -> int:
-        pass
+        # relationship is the previous max (dp value - 1, dp value - 2) + 1
+
+        # ensure no oob access
+        if n == 1:
+            return 1
+
+        if n == 2:
+            return 2
+
+        dp = [0] * n
+
+        # the first step is always 1
+        # (only 1 way to climb the first step)
+        dp[0] = 1
+        # the second step is either the two single steps or 1 double step
+        dp[1] = 2
+
+        for i in range(2, n):
+            print(dp[i - 1], dp[i - 2])
+            dp[i] = dp[i - 1] + dp[i - 2]  # sum the previous two distinct ways
+
+        return dp[n - 1]
 
 
 TEST_CASES = [
